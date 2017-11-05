@@ -31,7 +31,7 @@ end
 function show_virtualenv -d "Show active python virtual environments"
   if set -q VIRTUAL_ENV
     set -l venvname (basename "$VIRTUAL_ENV")
-    prompt_segment normal white " ($venvname)"
+    prompt_segment blue white " ($venvname)"
   end
 end
 
@@ -40,12 +40,12 @@ function show_user -d "Show user"
   if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
     set -l host (hostname -s)
     set -l who (whoami)
-    prompt_segment normal yellow " $who"
+    prompt_segment white cyan " $who"
 
     # Skip @ bit if hostname == username
     if [ "$USER" != "$HOST" ]
-      prompt_segment normal white "@"
-      prompt_segment normal green "$host "
+      prompt_segment cyan white "@"
+      prompt_segment cyan white "$host "
       set pad ""
     end
     end
@@ -54,18 +54,18 @@ end
 # Show directory
 function show_pwd -d "Show the current directory"
   set -l pwd (prompt_pwd)
-  prompt_segment normal blue "$pad$pwd "
+  prompt_segment brwhite cyan "$pad$pwd "
 end
 
 # Show prompt w/ privilege cue
 function show_prompt -d "Shows prompt with cue for current priv"
   set -l uid (id -u $USER)
     if [ $uid -eq 0 ]
-    prompt_segment red white " ! "
+    prompt_segment red white "! "
     set_color normal
     echo -n -s " "
   else
-    prompt_segment normal white " \$ "
+    prompt_segment cyan brmagenta "> "
     end
 
   set_color normal
