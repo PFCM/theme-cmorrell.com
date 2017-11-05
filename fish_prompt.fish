@@ -31,13 +31,13 @@ end
 function show_virtualenv -d "Show active python virtual environments"
   if set -q VIRTUAL_ENV
     set -l venvname (basename "$VIRTUAL_ENV")
-    prompt_segment blue white " ($venvname)"
+    prompt_segment normal white " ($venvname) "
   end
 end
 
-## Show user if not default
+## Show user if not in default users
 function show_user -d "Show user"
-  if [ "$USER" != "$default_user" -o -n "$SSH_CLIENT" ]
+  if not contains $USER $default_user; or test -n "$SSH_CLIENT"
     set -l host (hostname -s)
     set -l who (whoami)
     prompt_segment white cyan " $who"
@@ -48,7 +48,7 @@ function show_user -d "Show user"
       prompt_segment cyan white "$host "
       set pad ""
     end
-    end
+  end
 end
 
 # Show directory
